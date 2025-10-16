@@ -1,0 +1,318 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String   @id @default(cuid())
+  displayName   String   @map("display_name")
+  email         String   @unique
+  password      String
+  city          String
+  state         String
+  ecoCoins      Int      @default(0) @map("eco_coins")
+  communityRank Int      @default(0) @map("community_rank")
+  points        Int      @default(0)
+  totalRecycled Float    @default(0) @map("total_recycled")
+  co2Saved      Float    @default(0) @map("co2_saved")
+  activeStreak  Int      @default(0) @map("active_streak")
+  isNewUser     Boolean  @default(true) @map("is_new_user")
+  locationLat   Float?
+  locationLng   Float?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  recyclingActivities RecyclingActivity[]
+  eventParticipations EventParticipation[]
+  marketplaceActivities MarketplaceActivity[]
+  itemViews ItemView[]
+  projectPledges ProjectPledge[]
+  communityProjects          CommunityProject[]        @relation("UserProjects")
+  communityProjectParticipations CommunityProjectParticipation[]
+  communityProjectSubmissions CommunityProjectSubmission[]
+  wishlistItems WishlistItem[]
+  ecoTradeItems EcoTradeItem[]
+  eventEnrollments EventEnrollment[]
+  messagesFrom ChatMessage[] @relation("fromUser")
+  messagesTo   ChatMessage[] @relation("toUser")
+  membership   Membership?
+  communityId  String?  @map("community_id")
+  community    Community? @relation(fields: [communityId], references: [id])
+  payments     Payment[]
+
+  @@map("users")
+}
+
+model RecyclingActivity {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  material    String   // paper, plastic, glass, metal, organic
+  weight      Float    // in kg
+  co2Saved    Float    @map("co2_saved") // calculated CO2 saved
+  coinsEarned Int      @map("coins_earned") // coins earned for this activity
+  location    String?  // optional location
+  notes       String?  // optional notes
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("recycling_activities")
+}
+
+model EventParticipation {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  eventId   String   @map("event_id")
+  eventName String   @map("event_name")
+  coinsEarned Int    @map("coins_earned")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("event_participations")
+}
+
+model MarketplaceActivity {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  itemId      String   @map("item_id")
+  itemName    String   @map("item_name")
+  itemPrice   Float    @map("item_price")
+  activityType String  @map("activity_type") // 'view', 'purchase', 'favorite', 'share'
+  coinsSpent  Int      @map("coins_spent") // For purchases
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("marketplace_activities")
+}
+
+model ItemView {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  itemId    String   @map("item_id")
+  itemName  String   @map("item_name")
+  itemCategory String @map("item_category")
+  viewDuration Int   @map("view_duration") // in seconds
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("item_views")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  category    String   // 'environment', 'community', 'education', 'innovation'
+  goalAmount  Float    @map("goal_amount")
+  currentAmount Float  @map("current_amount") @default(0)
+  status      String   @default("active") // 'active', 'completed', 'cancelled'
+  creatorId   String   @map("creator_id")
+  creatorName String   @map("creator_name")
+  imageUrl    String?  @map("image_url")
+  deadline    DateTime?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  pledges ProjectPledge[]
+
+  @@map("projects")
+}
+
+model ProjectPledge {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  projectId   String   @map("project_id")
+  projectTitle String  @map("project_title")
+  pledgeAmount Float   @map("pledge_amount")
+  pledgeType  String   @map("pledge_type") // 'vote', 'donation', 'volunteer'
+  message     String?  // Optional message with pledge
+  status      String   @default("active") // 'active', 'cancelled', 'completed'
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("project_pledges")
+}
+
+// Community Projects
+model CommunityProject {
+  id           String   @id @default(cuid())
+  title        String
+  description  String
+  creatorId    String   @map("creator_id")
+  sharedLinks  Json     @default("[]") @map("shared_links")
+  participants Int      @default(0)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  creator      User     @relation("UserProjects", fields: [creatorId], references: [id], onDelete: Cascade)
+  participations CommunityProjectParticipation[]
+  submissions    CommunityProjectSubmission[]
+
+  @@map("community_projects")
+}
+
+model CommunityProjectParticipation {
+  id         String   @id @default(cuid())
+  projectId  String   @map("project_id")
+  userId     String   @map("user_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  // Relations
+  project CommunityProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+  @@map("community_project_participations")
+}
+
+model CommunityProjectSubmission {
+  id         String   @id @default(cuid())
+  projectId  String   @map("project_id")
+  userId     String   @map("user_id")
+  proofUrl   String?  @map("proof_url")
+  note       String?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  // Relations
+  project CommunityProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("community_project_submissions")
+}
+
+// Ecotrade
+model EcoTradeItem {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  price       Float
+  status      String   @default("active") // active, sold
+  sellerId    String   @map("seller_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  seller User @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  @@map("ecotrade_items")
+}
+
+model WishlistItem {
+  id       String @id @default(cuid())
+  userId   String @map("user_id")
+  itemId   String @map("item_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // No strict FK to EcoTradeItem to allow deletion; but keep relation-like indexing
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, itemId])
+  @@map("wishlist_items")
+}
+
+// Events and enrollments
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  startsAt    DateTime @map("starts_at")
+  location    String
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  enrollments EventEnrollment[]
+
+  @@map("events")
+}
+
+model EventEnrollment {
+  id        String   @id @default(cuid())
+  eventId   String   @map("event_id")
+  userId    String   @map("user_id")
+  paid      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId])
+  @@map("event_enrollments")
+}
+
+// Simple chat message model (for fallback if not using external real-time DB)
+model ChatMessage {
+  id        String   @id @default(cuid())
+  fromUserId String  @map("from_user_id")
+  toUserId   String  @map("to_user_id")
+  body      String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  fromUser User @relation("fromUser", fields: [fromUserId], references: [id], onDelete: Cascade)
+  toUser   User @relation("toUser", fields: [toUserId], references: [id], onDelete: Cascade)
+
+  @@map("chat_messages")
+}
+
+// Membership and Communities
+model Community {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  users User[]
+
+  @@map("communities")
+}
+
+model Membership {
+  id        String   @id @default(cuid())
+  userId    String   @unique @map("user_id")
+  tier      String   @default("free") // free, premium
+  active    Boolean  @default(true)
+  renewsAt  DateTime?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("memberships")
+}
+
+model Payment {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  type         String   // event, item, membership
+  referenceId  String?  @map("reference_id") // eventId/itemId
+  amount       Int
+  currency     String   @default("INR")
+  provider     String   // stripe, razorpay
+  providerRef  String   @unique @map("provider_ref")
+  status       String   @default("pending") // pending, paid, failed
+  metadata     Json?
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}

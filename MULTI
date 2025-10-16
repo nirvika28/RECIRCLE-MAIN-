@@ -1,0 +1,304 @@
+// components/navbar.tsx
+import Link from 'next/link';
+import Button from './Button';
+import { useState } from 'react';
+
+const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  return (
+    <nav className="bg-white shadow-lg">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="flex justify-between">
+          <div className="flex space-x-7">
+            <div>
+              <Link href="/">
+                <a className="flex items-center py-4 px-2">
+                  <img src="/logo.png" alt="Logo" className="h-8 w-8" />
+                  <span className="font-semibold text-gray-500 text-lg ml-2">ReCircle</span>
+                </a>
+              </Link>
+            </div>
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+              <Link href="#features" className="text-gray-600 hover:text-green-700 transition-colors">
+                Features
+              </Link>
+              <Link href="#how-it-works" className="text-gray-600 hover:text-green-700 transition-colors">
+                How It Works
+              </Link>
+              <Link href="#community" className="text-gray-600 hover:text-green-700 transition-colors">
+                Community
+              </Link>
+            </nav>
+            {/* Mobile Menu */}
+            <div className="md:hidden flex items-center justify-center">
+              <button
+                className="outline-none mobile-menu-button"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                <svg
+                  className="w-6 h-6 text-gray-500 hover:text-green-700"
+                  x-show="!open"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div className="md:hidden">
+            <div className={isMenuOpen ? 'mobile-menu md:hidden' : 'hidden'}>
+              <nav className="flex flex-col space-y-4 text-sm font-medium">
+                <Link
+                  href="#features"
+                  className="text-gray-600 hover:text-green-700 transition-colors mobile-link"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Features
+                </Link>
+                <Link
+                  href="#how-it-works"
+                  className="text-gray-600 hover:text-green-700 transition-colors mobile-link"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  How It Works
+                </Link>
+                <Link
+                  href="#community"
+                  className="text-gray-600 hover:text-green-700 transition-colors mobile-link"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Community
+                </Link>
+                <div className="pt-2 flex flex-col space-y-2">
+                  <Link href="/login">
+                    <Button variant="ghost" className="w-full justify-center">
+                      Log in
+                    </Button>
+                  </Link>
+                  <Link href="/login">
+                    <Button className="w-full justify-center bg-green-600 hover:bg-green-700">Join Now</Button>
+                  </Link>
+                </div>
+              </nav>
+            </div>
+          </div>
+          {/* Header Actions (Desktop) */}
+          <div className="hidden md:flex items-center space-x-1">
+            <Link href="/login">
+              <Button className="bg-green-600 hover:bg-green-700">Join Now</Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
+
+// app/page.tsx
+import Link from 'next/link';
+import Button from './Button';
+
+const HomePage = () => {
+  return (
+    <div className="bg-white">
+      {/* Hero Section */}
+      <section className="bg-green-50 py-20 px-4 md:px-6">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-4xl font-bold text-gray-800">Welcome to ReCircle</h1>
+          <p className="mt-4 text-gray-600">
+            Connect with like-minded individuals and contribute to sustainable living.
+          </p>
+          <div className="mt-8 flex justify-center space-x-4">
+            <Link href="/login">
+              <Button className="bg-green-600 hover:bg-green-700">Join Now</Button>
+            </Link>
+            <Link href="#features">
+              <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-50 bg-transparent">
+                Learn More
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section id="how-it-works" className="bg-green-50 py-20 px-4 md:px-6">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-gray-800">How It Works</h2>
+          <p className="mt-4 text-gray-600">
+            Our platform connects you with others who share your passion for sustainability.
+          </p>
+        </div>
+      </section>
+
+      {/* Community Stories Section */}
+      <section id="community" className="py-20 px-4 md:px-6">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-gray-800">Community Stories</h2>
+          <p className="mt-4 text-gray-600">
+            Hear from our community members about their experiences and achievements.
+          </p>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default HomePage;
+
+// app/login/page.tsx
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Button from './Button';
+import Input from './Input';
+import Label from './Label';
+
+const LoginPage = () => {
+  const router = useRouter();
+
+  const handleLogin = () => {
+    // Login logic here
+    router.push('/splash');
+  };
+
+  const handleSignup = () => {
+    // Signup logic here
+    router.push('/splash');
+  };
+
+  return (
+    <div className="bg-white">
+      {/* Login Form */}
+      <form className="max-w-6xl mx-auto p-6">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6">Log in</h2>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="city">City</Label>
+            <Input id="city" placeholder="e.g., Austin" required />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="state">State</Label>
+            <Input id="state" placeholder="e.g., TX" required />
+          </div>
+        </div>
+        <div className="mt-6">
+          <Button onClick={handleLogin} className="bg-green-600 hover:bg-green-700 w-full">
+            Log in
+          </Button>
+        </div>
+      </form>
+
+      {/* Signup Form */}
+      <form className="max-w-6xl mx-auto p-6">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6">Sign up</h2>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="city">City</Label>
+            <Input id="city" placeholder="e.g., Austin" required />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="state">State</Label>
+            <Input id="state" placeholder="e.g., TX" required />
+          </div>
+        </div>
+        <div className="mt-6">
+          <Button onClick={handleSignup} className="bg-green-600 hover:bg-green-700 w-full">
+            Sign up
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default LoginPage;
+
+// login.html (static)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReCircle Login</title>
+</head>
+<body>
+  <nav className="bg-white shadow-lg">
+    <div className="max-w-6xl mx-auto px-4">
+      <div className="flex justify-between">
+        <div className="flex space-x-7">
+          <div>
+            <Link href="/">
+              <a className="flex items-center py-4 px-2">
+                <img src="/logo.png" alt="Logo" className="h-8 w-8" />
+                <span className="font-semibold text-gray-500 text-lg ml-2">ReCircle</span>
+              </a>
+            </Link>
+          </div>
+          {/* Desktop Nav */}
+          <ul className="nav-links hidden md:flex space-x-6 text-sm font-medium">
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="index.html#how-it-works">How It Works</a></li>
+            <li><a href="index.html#community">Community</a></li>
+          </ul>
+          {/* Mobile Menu */}
+          <div className="md:hidden flex items-center justify-center">
+            <button className="outline-none mobile-menu-button">
+              <svg
+                className="w-6 h-6 text-gray-500 hover:text-green-700"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M4 6h16M4 12h16m-7 6h7"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {/* Mobile Menu Links */}
+    <ul className="mobile-nav-links md:hidden flex flex-col space-y-4 text-sm font-medium">
+      <li><a href="index.html#features" class="mobile-link">Features</a></li>
+      <li><a href="index.html#how-it-works" class="mobile-link">How It Works</a></li>
+      <li><a href="index.html#community" class="mobile-link">Community</a></li>
+    </ul>
+  </nav>
+
+  {/* Signup Form */}
+  <form className="max-w-6xl mx-auto p-6">
+    <h2 className="text-3xl font-bold text-gray-800 mb-6">Sign up</h2>
+    <div className="form-row">
+      <div className="form-group">
+        <label for="city">City</label>
+        <input type="text" id="city" placeholder="e.g., Austin" required>
+      </div>
+      <div className="form-group">
+        <label for="state">State</label>
+        <input type="text" id="state" placeholder="e.g., TX" required>
+      </div>
+    </div>
+    <div className="mt-6">
+      <Button variant="ghost" className="w-full justify-center">
+        Log in
+      </Button>
+    </div>
+    <div className="mt-4">
+      <Button className="w-full justify-center bg-green-600 hover:bg-green-700">
+        Sign up
+      </Button>
+    </div>
+  </form>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Splash - ReCircle</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .splash-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#fff;padding:2rem}
+    .splash-card{max-width:640px;width:100%;text-align:center;border:1px solid #eef2f7;border-radius:12px;padding:2rem}
+    .spinner{width:48px;height:48px;border:4px solid #e6f4ea;border-top-color:#16a34a;border-radius:50%;margin:0 auto 1rem;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .splash-title{font-size:1.5rem;color:#14532d;margin:0 0 .5rem}
+    .splash-sub{color:#6b7280;margin:0}
+  </style>
+</head>
+<body>
+  <main class="splash-wrap">
+    <div class="splash-card">
+      <div class="spinner" aria-hidden="true"></div>
+      <h1 class="splash-title">One step closer to becoming a member.</h1>
+      <p class="splash-sub">Preparing your dashboard...</p>
+    </div>
+  </main>
+  <script>
+    setTimeout(() => {
+      window.location.href = "dashboard.html"
+    }, 1800)
+  </script>
+</body>
+</html>

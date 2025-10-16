@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - ReCircle</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-recycle"></i>
+          </div>
+          <span class="logo-text">ReCircle</span>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li class="active">
+            <a href="dashboard.html">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="recycling.html">
+              <i class="fas fa-recycle"></i>
+              <span>Recycling</span>
+            </a>
+          </li>
+          <li>
+            <a href="community.html">
+              <i class="fas fa-users"></i>
+              <span>Community</span>
+            </a>
+          </li>
+          <li>
+            <a href="projects.html">
+              <i class="fas fa-hammer"></i>
+              <span>Projects</span>
+            </a>
+          </li>
+          <li>
+            <a href="marketplace.html">
+              <i class="fas fa-store"></i>
+              <span>Marketplace</span>
+            </a>
+          </li>
+          <li>
+            <a href="tracker.html">
+              <i class="fas fa-chart-bar"></i>
+              <span>Tracker</span>
+            </a>
+          </li>
+          <li>
+            <a href="settings.html">
+              <i class="fas fa-cog"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="index.html">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <!-- Mobile Header -->
+      <header class="mobile-header">
+        <button class="menu-toggle" id="sidebar-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <a href="index.html" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-recycle"></i>
+          </div>
+          <span class="logo-text">ReCircle</span>
+        </a>
+      </header>
+
+      <div class="dashboard-content">
+        <div class="dashboard-header">
+          <h1>Dashboard</h1>
+          <div class="user-actions">
+            <div class="notifications">
+              <button class="notification-btn">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+              </button>
+            </div>
+            <div class="user-profile">
+              <div class="avatar"></div>
+              <div class="user-info">
+                <p class="user-name">Anita Kumar</p>
+                <p class="user-location">Bengaluru, KA</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <h3>Total Recycled</h3>
+              <i class="fas fa-recycle"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-value">127.4 kg</div>
+              <p class="stat-change positive">+12.5% from last month</p>
+              <div class="progress-bar">
+                <div class="progress" style="width: 65%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <h3>CO₂ Saved</h3>
+              <i class="fas fa-leaf"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-value">42.8 kg</div>
+              <p class="stat-change positive">+8.3% from last month</p>
+              <div class="progress-bar">
+                <div class="progress" style="width: 42%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <h3>Community Rank</h3>
+              <i class="fas fa-award"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-value">#12</div>
+              <p class="stat-change positive">Up 3 positions</p>
+              <div class="progress-bar">
+                <div class="progress" style="width: 78%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <h3>Active Streak</h3>
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-value">14 days</div>
+              <p class="stat-change positive">Personal best!</p>
+              <div class="progress-bar">
+                <div class="progress" style="width: 56%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-grid">
+          <div class="chart-card large">
+            <div class="chart-header">
+              <div>
+                <h3>Environmental Impact</h3>
+                <p>Your recycling and sustainability metrics over time</p>
+              </div>
+              <div class="chart-controls">
+                <button class="chart-control active" data-timeframe="week">Week</button>
+                <button class="chart-control" data-timeframe="month">Month</button>
+                <button class="chart-control" data-timeframe="year">Year</button>
+              </div>
+            </div>
+            <div class="chart-content">
+              <canvas id="impactChart"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header">
+              <h3>Recycling Breakdown</h3>
+              <p>Distribution of your recycled materials</p>
+            </div>
+            <div class="chart-content">
+              <canvas id="recyclingChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Section -->
+        <div class="activity-grid">
+          <div class="activity-card large">
+            <div class="activity-header">
+              <h3>Community Activity</h3>
+              <p>Recent activities in your local cluster</p>
+            </div>
+            <div class="activity-content">
+              <div class="activity-item">
+                <div class="activity-avatar"></div>
+                <div class="activity-details">
+                  <div class="activity-meta">
+                    <p class="activity-user">Priya Sharma</p>
+                    <span class="activity-badge recycling">recycling</span>
+                  </div>
+                  <p class="activity-action">recycled 5.2 kg of paper</p>
+                  <p class="activity-time">2 hours ago</p>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-avatar"></div>
+                <div class="activity-details">
+                  <div class="activity-meta">
+                    <p class="activity-user">Arjun Nair</p>
+                    <span class="activity-badge event">event</span>
+                  </div>
+                  <p class="activity-action">organized a community cleanup</p>
+                  <p class="activity-time">Yesterday</p>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-avatar"></div>
+                <div class="activity-details">
+                  <div class="activity-meta">
+                    <p class="activity-user">Aisha Khan</p>
+                    <span class="activity-badge education">education</span>
+                  </div>
+                  <p class="activity-action">shared a guide on composting</p>
+                  <p class="activity-time">2 days ago</p>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-avatar"></div>
+                <div class="activity-details">
+                  <div class="activity-meta">
+                    <p class="activity-user">Rohan Gupta</p>
+                    <span class="activity-badge achievement">achievement</span>
+                  </div>
+                  <p class="activity-action">reached 100kg recycling milestone</p>
+                  <p class="activity-time">3 days ago</p>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-avatar"></div>
+                <div class="activity-details">
+                  <div class="activity-meta">
+                    <p class="activity-user">Meera Iyer</p>
+                    <span class="activity-badge community">community</span>
+                  </div>
+                  <p class="activity-action">joined the Bengaluru cluster</p>
+                  <p class="activity-time">4 days ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="activity-card">
+            <div class="activity-header">
+              <h3>Quick Actions</h3>
+              <p>Common tasks and shortcuts</p>
+            </div>
+            <div class="activity-content">
+              <div class="quick-actions">
+                <a href="recycling.html" class="quick-action">
+                  <div class="action-icon">
+                    <i class="fas fa-camera"></i>
+                  </div>
+                  <div class="action-content">
+                    <h4>Log Recycling</h4>
+                    <p>Take a photo and log your recycling activity</p>
+                  </div>
+                </a>
+
+                <a href="projects.html" class="quick-action">
+                  <div class="action-icon">
+                    <i class="fas fa-hammer"></i>
+                  </div>
+                  <div class="action-content">
+                    <h4>Join Project</h4>
+                    <p>Participate in community upgrade projects</p>
+                  </div>
+                </a>
+
+                <a href="marketplace.html" class="quick-action">
+                  <div class="action-icon">
+                    <i class="fas fa-store"></i>
+                  </div>
+                  <div class="action-content">
+                    <h4>Browse Market</h4>
+                    <p>Find pre-owned items in your area</p>
+                  </div>
+                </a>
+
+                <a href="tracker.html" class="quick-action">
+                  <div class="action-icon">
+                    <i class="fas fa-chart-bar"></i>
+                  </div>
+                  <div class="action-content">
+                    <h4>Track Progress</h4>
+                    <p>View your segregation streak and habits</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

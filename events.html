@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events - ReCircle</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-recycle"></i>
+          </div>
+          <span class="logo-text">ReCircle</span>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <a href="dashboard.html">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="recycling.html">
+              <i class="fas fa-recycle"></i>
+              <span>Recycling</span>
+            </a>
+          </li>
+          <li>
+            <a href="community.html">
+              <i class="fas fa-users"></i>
+              <span>Community</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="events.html">
+              <i class="fas fa-calendar-alt"></i>
+              <span>Events</span>
+            </a>
+          </li>
+          <li>
+            <a href="map.html">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Local Map</span>
+            </a>
+          </li>
+          <li>
+            <a href="settings.html">
+              <i class="fas fa-cog"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="index.html">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <!-- Mobile Header -->
+      <header class="mobile-header">
+        <button class="menu-toggle" id="sidebar-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <a href="index.html" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-recycle"></i>
+          </div>
+          <span class="logo-text">ReCircle</span>
+        </a>
+      </header>
+
+      <div class="dashboard-content">
+        <div class="dashboard-header">
+          <h1>Events</h1>
+          <button class="btn btn-primary">
+            <i class="fas fa-plus"></i>
+            Create Event
+          </button>
+        </div>
+
+        <div class="events-filter">
+          <div class="filter-group">
+            <label for="event-type">Event Type</label>
+            <select id="event-type">
+              <option value="all">All Types</option>
+              <option value="cleanup">Cleanup</option>
+              <option value="workshop">Workshop</option>
+              <option value="fair">Fair</option>
+              <option value="meetup">Meetup</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="event-date">Date Range</label>
+            <select id="event-date">
+              <option value="upcoming">Upcoming</option>
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="event-location">Location</label>
+            <select id="event-location">
+              <option value="all">All Locations</option>
+              <option value="bengaluru">Bengaluru, KA</option>
+              <option value="nearby">Within 10 km</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="events-grid">
+          <div class="event-card">
+            <div class="event-image cleanup"></div>
+            <div class="event-content">
+              <div class="event-header">
+                <h3>Community Cleanup Day</h3>
+                <span class="event-badge cleanup">cleanup</span>
+              </div>
+              <div class="event-details">
+                <p class="event-date">
+                  <i class="fas fa-calendar-alt"></i>
+                  Sep 15, 2023, 9:00 AM - 12:00 PM
+                </p>
+                <p class="event-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  Cubbon Park, Bengaluru
+                </p>
+                <p class="event-attendees">
+                  <i class="fas fa-users"></i>
+                  24 attending
+                </p>
+              </div>
+              <p class="event-description">Join us for a community cleanup day at Cubbon Park. We'll provide gloves, bags, and tools. Help us keep our parks clean!</p>
+              <div class="event-actions">
+                <button class="btn btn-primary">RSVP</button>
+                <button class="btn btn-outline">
+                  <i class="fas fa-share"></i>
+                  Share
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card">
+            <div class="event-image workshop"></div>
+            <div class="event-content">
+              <div class="event-header">
+                <h3>Recycling Workshop</h3>
+                <span class="event-badge workshop">workshop</span>
+              </div>
+              <div class="event-details">
+                <p class="event-date">
+                  <i class="fas fa-calendar-alt"></i>
+                  Sep 18, 2023, 6:30 PM - 8:00 PM
+                </p>
+                <p class="event-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  Jayanagar Community Hall, Bengaluru
+                </p>
+                <p class="event-attendees">
+                  <i class="fas fa-users"></i>
+                  18 attending
+                </p>
+              </div>
+              <p class="event-description">Learn how to properly sort and recycle different materials. This workshop will cover common recycling mistakes and how to avoid them.</p>
+              <div class="event-actions">
+                <button class="btn btn-primary">RSVP</button>
+                <button class="btn btn-outline">
+                  <i class="fas fa-share"></i>
+                  Share
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card">
+            <div class="event-image fair"></div>
+            <div class="event-content">
+              <div class="event-header">
+                <h3>Sustainable Living Fair</h3>
+                <span class="event-badge fair">fair</span>
+              </div>
+              <div class="event-details">
+                <p class="event-date">
+                  <i class="fas fa-calendar-alt"></i>
+                  Sep 23, 2023, 10:00 AM - 4:00 PM
+                </p>
+                <p class="event-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  MG Road Boulevard, Bengaluru
+                </p>
+                <p class="event-attendees">
+                  <i class="fas fa-users"></i>
+                  120 attending
+                </p>
+              </div>
+              <p class="event-description">A day-long fair featuring local sustainable businesses, workshops, food, and activities for all ages. Learn about sustainable living practices.</p>
+              <div class="event-actions">
+                <button class="btn btn-primary">RSVP</button>
+                <button class="btn btn-outline">
+                  <i class="fas fa-share"></i>
+                  Share
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card">
+            <div class="event-image meetup"></div>
+            <div class="event-content">
+              <div class="event-header">
+                <h3>Zero Waste Meetup</h3>
+                <span class="event-badge meetup">meetup</span>
+              </div>
+              <div class="event-details">
+                <p class="event-date">
+                  <i class="fas fa-calendar-alt"></i>
+                  Sep 28, 2023, 7:00 PM - 9:00 PM
+                </p>
+                <p class="event-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  Indiranagar Club, Bengaluru
+                </p>
+                <p class="event-attendees">
+                  <i class="fas fa-users"></i>
+                  32 attending
+                </p>
+              </div>
+              <p class="event-description">Monthly meetup for those interested in zero waste living. Share tips, challenges, and successes in a casual, friendly environment.</p>
+              <div class="event-actions">
+                <button class="btn btn-primary">RSVP</button>
+                <button class="btn btn-outline">
+                  <i class="fas fa-share"></i>
+                  Share
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card">
+            <div class="event-image workshop"></div>
+            <div class="event-content">
+              <div class="event-header">
+                <h3>Composting 101</h3>
+                <span class="event-badge workshop">workshop</span>
+              </div>
+              <div class="event-details">
+                <p class="event-date">
+                  <i class="fas fa-calendar-alt"></i>
+                  Oct 5, 2023, 10:00 AM - 12:00 PM
+                </p>
+                <p class="event-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  JP Nagar Community Garden, Bengaluru
+                </p>
+                <p class="event-attendees">
+                  <i class="fas fa-users"></i>
+                  15 attending
+                </p>
+              </div>
+              <p class="event-description">Learn the basics of home composting in this hands-on workshop. We'll cover different composting methods, what can be composted, and troubleshooting.</p>
+              <div class="event-actions">
+                <button class="btn btn-primary">RSVP</button>
+                <button class="btn btn-outline">
+                  <i class="fas fa-share"></i>
+                  Share
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card">
+            <div class="event-image cleanup"></div>
+            <div class="event-content">
+              <div class="event-header">
+                <h3>River Cleanup Project</h3>
+                <span class="event-badge cleanup">cleanup</span>
+              </div>
+              <div class="event-details">
+                <p class="event-date">
+                  <i class="fas fa-calendar-alt"></i>
+                  Oct 8, 2023, 8:00 AM - 1:00 PM
+                </p>
+                <p class="event-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  Sankey Tank, Bengaluru
+                </p>
+                <p class="event-attendees">
+                  <i class="fas fa-users"></i>
+                  45 attending
+                </p>
+              </div>
+              <p class="event-description">Join our largest cleanup event of the year! We'll be removing trash and debris from the riverbanks and shallow waters. Equipment provided.</p>
+              <div class="event-actions">
+                <button class="btn btn-primary">RSVP</button>
+                <button class="btn btn-outline">
+                  <i class="fas fa-share"></i>
+                  Share
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pagination">
+          <button class="pagination-btn active">1</button>
+          <button class="pagination-btn">2</button>
+          <button class="pagination-btn">3</button>
+          <button class="pagination-btn">
+            <i class="fas fa-ellipsis-h"></i>
+          </button>
+          <button class="pagination-btn">10</button>
+          <button class="pagination-btn">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/events.js"></script>
+</body>
+</html>
